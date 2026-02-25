@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Settings | Job Notification App</title>
+  <title>Settings | Job Notification Tracker</title>
   <link rel="stylesheet" href="../design-system/design-system.css">
   <link rel="stylesheet" href="navigation.css">
 </head>
@@ -14,7 +14,7 @@
   <!-- Main Navigation -->
   <nav class="main-nav" role="navigation" aria-label="Main navigation">
     <div class="container">
-      <a href="index.html" class="nav-brand">Job Notification App</a>
+      <a href="landing.html" class="nav-brand">Job Notification Tracker</a>
       
       <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation menu">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -23,6 +23,7 @@
       </button>
       
       <ul class="nav-links">
+        <li><a href="landing.html" class="nav-link">Home</a></li>
         <li><a href="index.html" class="nav-link">Dashboard</a></li>
         <li><a href="saved.html" class="nav-link">Saved</a></li>
         <li><a href="digest.html" class="nav-link">Digest</a></li>
@@ -34,9 +35,59 @@
 
   <!-- Page Content -->
   <main id="main-content" class="page-content">
-    <div class="placeholder-page">
-      <h1>Settings</h1>
-      <p>This section will be built in the next step.</p>
+    <div class="container" style="padding-top: var(--space-5); padding-bottom: var(--space-5);">
+      <div style="max-width: 600px; margin: 0 auto;">
+        <h1 style="font-family: var(--font-heading); font-size: var(--font-size-2xl); margin-bottom: var(--space-2);">Settings</h1>
+        <p style="color: var(--color-text-secondary); margin-bottom: var(--space-4);">Configure your job preferences to receive precision-matched opportunities.</p>
+        
+        <div class="card" style="margin-bottom: var(--space-3);">
+          <div class="card-header">
+            <h3 style="font-family: var(--font-heading); font-size: var(--font-size-lg);">Job Preferences</h3>
+          </div>
+          <div class="card-body">
+            <!-- Role Keywords -->
+            <div class="form-group" style="margin-bottom: var(--space-3);">
+              <label class="form-label">Role Keywords</label>
+              <input type="text" class="input" placeholder="e.g., Product Manager, UX Designer, Software Engineer">
+              <span class="form-hint">Separate multiple keywords with commas</span>
+            </div>
+            
+            <!-- Preferred Locations -->
+            <div class="form-group" style="margin-bottom: var(--space-3);">
+              <label class="form-label">Preferred Locations</label>
+              <input type="text" class="input" placeholder="e.g., San Francisco, Remote, New York">
+              <span class="form-hint">Add cities, states, or "Remote"</span>
+            </div>
+            
+            <!-- Work Mode -->
+            <div class="form-group" style="margin-bottom: var(--space-3);">
+              <label class="form-label">Work Mode</label>
+              <select class="input select">
+                <option value="">Select preferred work mode</option>
+                <option value="remote">Remote</option>
+                <option value="hybrid">Hybrid</option>
+                <option value="onsite">Onsite</option>
+              </select>
+            </div>
+            
+            <!-- Experience Level -->
+            <div class="form-group" style="margin-bottom: var(--space-3);">
+              <label class="form-label">Experience Level</label>
+              <select class="input select">
+                <option value="">Select your experience level</option>
+                <option value="entry">Entry Level (0-2 years)</option>
+                <option value="mid">Mid Level (3-5 years)</option>
+                <option value="senior">Senior Level (6+ years)</option>
+                <option value="lead">Lead / Staff</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-secondary">Reset</button>
+            <button class="btn btn-primary">Save Preferences</button>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 

@@ -3,9 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><!-- PAGE_TITLE --> | Job Notification Tracker</title>
+  <title>Job Notification Tracker</title>
   <link rel="stylesheet" href="../design-system/design-system.css">
   <link rel="stylesheet" href="navigation.css">
+  <style>
+    .landing-page {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: var(--space-5);
+      min-height: calc(100vh - var(--nav-height));
+    }
+
+    .landing-page h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(var(--font-size-2xl), 5vw, var(--font-size-3xl));
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-3);
+      max-width: var(--text-max-width);
+      line-height: var(--line-height-tight);
+      letter-spacing: var(--letter-spacing-tight);
+    }
+
+    .landing-page .subtext {
+      font-size: var(--font-size-md);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-4);
+      max-width: 480px;
+      line-height: var(--line-height-relaxed);
+    }
+
+    .landing-page .cta-button {
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--font-size-md);
+    }
+  </style>
 </head>
 <body>
   <!-- Skip Link for Accessibility -->
@@ -23,7 +59,7 @@
       </button>
       
       <ul class="nav-links">
-        <li><a href="landing.html" class="nav-link">Home</a></li>
+        <li><a href="landing.html" class="nav-link active">Home</a></li>
         <li><a href="index.html" class="nav-link">Dashboard</a></li>
         <li><a href="saved.html" class="nav-link">Saved</a></li>
         <li><a href="digest.html" class="nav-link">Digest</a></li>
@@ -33,11 +69,12 @@
     </div>
   </nav>
 
-  <!-- Page Content -->
+  <!-- Landing Page Content -->
   <main id="main-content" class="page-content">
-    <div class="placeholder-page">
-      <h1><!-- PAGE_HEADING --></h1>
-      <p>This section will be built in the next step.</p>
+    <div class="landing-page">
+      <h1>Stop Missing The Right Jobs.</h1>
+      <p class="subtext">Precision-matched job discovery delivered daily at 9AM.</p>
+      <a href="settings.html" class="btn btn-primary cta-button">Start Tracking</a>
     </div>
   </main>
 
