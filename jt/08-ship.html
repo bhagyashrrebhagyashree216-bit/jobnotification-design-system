@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ship | Job Notification Tracker</title>
+  <link rel="stylesheet" href="../design-system/design-system.css">
+  <link rel="stylesheet" href="../routes/navigation.css">
+  <style>
+    .ship-page {
+      min-height: calc(100vh - 60px);
+      padding: var(--space-5) 0;
+    }
+    
+    .ship-container {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    /* Locked State */
+    .ship-locked {
+      padding: var(--space-5);
+    }
+    
+    .ship-locked .lock-icon {
+      margin-bottom: var(--space-3);
+      color: var(--color-text-muted);
+    }
+    
+    .ship-locked h1 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-2);
+      color: var(--color-text-primary);
+    }
+    
+    .ship-locked p {
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-4);
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .ship-locked .test-progress {
+      width: 100%;
+      max-width: 300px;
+      height: 8px;
+      background-color: var(--color-background);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0 auto var(--space-3);
+    }
+    
+    .ship-locked .test-progress-bar {
+      height: 100%;
+      background-color: var(--color-warning);
+      transition: width 300ms ease-out;
+    }
+    
+    .ship-locked .test-count {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+    
+    /* Unlocked State */
+    .ship-unlocked {
+      padding: var(--space-5);
+    }
+    
+    .ship-unlocked .success-icon {
+      margin-bottom: var(--space-3);
+      color: var(--color-success);
+    }
+    
+    .ship-unlocked h1 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-2);
+      color: var(--color-text-primary);
+    }
+    
+    .ship-unlocked p {
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-4);
+    }
+    
+    .ship-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      align-items: center;
+    }
+    
+    .ship-note {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+      margin-top: var(--space-3);
+    }
+    
+    /* Card styling */
+    .ship-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-border-radius);
+      padding: var(--space-5);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .ship-container {
+        padding: 0 var(--space-2);
+      }
+      
+      .ship-card {
+        padding: var(--space-3);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Main Navigation -->
+  <nav class="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="../routes/landing.html" class="nav-brand">Job Notification Tracker</a>
+      
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      
+      <ul class="nav-links">
+        <li><a href="../routes/landing.html" class="nav-link">Home</a></li>
+        <li><a href="../routes/index.html" class="nav-link">Dashboard</a></li>
+        <li><a href="../routes/saved.html" class="nav-link">Saved</a></li>
+        <li><a href="../routes/digest.html" class="nav-link">Digest</a></li>
+        <li><a href="../routes/settings.html" class="nav-link">Settings</a></li>
+        <li><a href="07-test.html" class="nav-link">Test</a></li>
+        <li><a href="08-ship.html" class="nav-link active">Ship</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <main id="main-content" class="page-content ship-page">
+    <div class="container ship-container">
+      
+      <!-- Locked State (shown when tests not complete) -->
+      <div id="ship-locked" class="ship-card ship-locked">
+        <div class="lock-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="64" height="64">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <circle cx="12" cy="16" r="1"/>
+            <path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+        </div>
+        <h1>Complete All Tests Before Shipping</h1>
+        <p>You must pass all 10 test checklist items before proceeding to ship the application.</p>
+        
+        <div class="test-progress">
+          <div id="progress-bar" class="test-progress-bar" style="width: 0%;"></div>
+        </div>
+        <p id="test-count" class="test-count">0 / 10 tests completed</p>
+        
+        <a href="07-test.html" class="btn btn-primary">Go to Test Checklist</a>
+      </div>
+      
+      <!-- Unlocked State (shown when all tests pass) -->
+      <div id="ship-unlocked" class="ship-card ship-unlocked" style="display: none;">
+        <div class="success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="64" height="64">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h1>Ready to Ship!</h1>
+        <p>All tests passed. The Job Notification Tracker is ready for deployment.</p>
+        
+        <div class="ship-actions">
+          <div class="ship-summary">
+            <p><strong>10 / 10</strong> tests completed</p>
+          </div>
+          
+          <button class="btn btn-primary" onclick="alert('Deploy functionality would be implemented here.')">
+            Deploy Application
+          </button>
+          
+          <a href="07-test.html" class="btn btn-secondary">Review Test Checklist</a>
+        </div>
+        
+        <p class="ship-note">Last verified: <span id="last-verified">Just now</span></p>
+      </div>
+      
+    </div>
+  </main>
+
+  <script src="../routes/navigation.js"></script>
+  <script src="ship-lock.js"></script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Checklist | Job Notification Tracker</title>
+  <link rel="stylesheet" href="../design-system/design-system.css">
+  <link rel="stylesheet" href="../routes/navigation.css">
+  <style>
+    .test-page {
+      min-height: calc(100vh - 60px);
+      padding: var(--space-5) 0;
+    }
+    
+    .test-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .test-header {
+      text-align: center;
+      margin-bottom: var(--space-4);
+    }
+    
+    .test-header h1 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-2xl);
+      margin-bottom: var(--space-2);
+    }
+    
+    .test-header p {
+      color: var(--color-text-secondary);
+    }
+    
+    /* Test Summary Card */
+    .test-summary {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-border-radius);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+      text-align: center;
+    }
+    
+    .test-score {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+    
+    .test-score .passed {
+      color: var(--color-success);
+    }
+    
+    .test-score .total {
+      color: var(--color-text-muted);
+    }
+    
+    .test-progress {
+      width: 100%;
+      height: 8px;
+      background-color: var(--color-background);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: var(--space-3);
+    }
+    
+    .test-progress-bar {
+      height: 100%;
+      background-color: var(--color-success);
+      transition: width 300ms ease-out;
+    }
+    
+    .test-warning {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background-color: var(--color-warning-bg);
+      border: 1px solid var(--color-warning);
+      border-radius: var(--card-border-radius);
+      color: var(--color-warning);
+      font-size: var(--font-size-sm);
+    }
+    
+    .test-warning.hidden {
+      display: none;
+    }
+    
+    .test-success-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background-color: var(--color-success-bg);
+      border: 1px solid var(--color-success);
+      border-radius: var(--card-border-radius);
+      color: var(--color-success);
+      font-size: var(--font-size-sm);
+    }
+    
+    .test-success-message.hidden {
+      display: none;
+    }
+    
+    /* Checklist */
+    .checklist-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-border-radius);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    
+    .checklist-title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-3);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--color-border);
+    }
+    
+    .checklist-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-2);
+      border-radius: var(--card-border-radius);
+      transition: background-color 150ms ease-in-out;
+    }
+    
+    .checklist-item:hover {
+      background-color: var(--color-background);
+    }
+    
+    .checklist-item.checked {
+      opacity: 0.7;
+    }
+    
+    .checklist-item.checked .checklist-text {
+      text-decoration: line-through;
+      color: var(--color-text-muted);
+    }
+    
+    .checklist-checkbox {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: var(--color-accent);
+    }
+    
+    .checklist-content {
+      flex: 1;
+    }
+    
+    .checklist-text {
+      font-size: var(--font-size-base);
+      color: var(--color-text-primary);
+      line-height: 1.5;
+    }
+    
+    .checklist-tooltip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      cursor: help;
+    }
+    
+    .checklist-tooltip:hover {
+      color: var(--color-text-secondary);
+    }
+    
+    /* Controls */
+    .test-controls {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+    
+    /* Navigation to Ship */
+    .ship-navigation {
+      margin-top: var(--space-4);
+      text-align: center;
+    }
+    
+    .ship-navigation .btn {
+      min-width: 200px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .test-container {
+        padding: 0 var(--space-2);
+      }
+      
+      .checklist-card {
+        padding: var(--space-3);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Main Navigation -->
+  <nav class="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="../routes/landing.html" class="nav-brand">Job Notification Tracker</a>
+      
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      
+      <ul class="nav-links">
+        <li><a href="../routes/landing.html" class="nav-link">Home</a></li>
+        <li><a href="../routes/index.html" class="nav-link">Dashboard</a></li>
+        <li><a href="../routes/saved.html" class="nav-link">Saved</a></li>
+        <li><a href="../routes/digest.html" class="nav-link">Digest</a></li>
+        <li><a href="../routes/settings.html" class="nav-link">Settings</a></li>
+        <li><a href="07-test.html" class="nav-link active">Test</a></li>
+        <li><a href="08-ship.html" class="nav-link">Ship</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <main id="main-content" class="page-content test-page">
+    <div class="container test-container">
+      
+      <!-- Header -->
+      <div class="test-header">
+        <h1>Pre-Ship Test Checklist</h1>
+        <p>Verify all features work correctly before deployment.</p>
+      </div>
+      
+      <!-- Test Summary -->
+      <div class="test-summary">
+        <div class="test-score">
+          <span id="tests-passed" class="passed">0</span>
+          <span class="total"> / 10</span>
+        </div>
+        <div class="test-progress">
+          <div id="progress-bar" class="test-progress-bar" style="width: 0%;"></div>
+        </div>
+        <div id="test-warning" class="test-warning">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Resolve all issues before shipping.
+        </div>
+        <div id="test-success" class="test-success-message hidden">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          All tests passed! Ready to ship.
+        </div>
+      </div>
+      
+      <!-- Checklist -->
+      <div class="checklist-card">
+        <h2 class="checklist-title">Test Items</h2>
+        <div class="checklist-items" id="checklist-items">
+          
+          <!-- Test Item 1 -->
+          <div class="checklist-item" data-test-id="1">
+            <input type="checkbox" class="checklist-checkbox" id="test-1">
+            <div class="checklist-content">
+              <label for="test-1" class="checklist-text">Preferences persist after refresh</label>
+              <span class="checklist-tooltip" title="Go to Settings, set preferences, refresh page, verify preferences are still there">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                How to test
+              </span>
+            </div>
+          </div>
+          
+          <!-- Test Item 2 -->
+          <div class="checklist-item" data-test-id="2">
+            <input type="checkbox" class="checklist-checkbox" id="test-2">
+            <div class="checklist-content">
+              <label for="test-2" class="checklist-text">Match score calculates correctly</label>
+              <span class="checklist-tooltip" title="Set preferences, go to Dashboard, verify jobs show match scores based on your preferences">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                How to test
+              </span>
+            </div>
+          </div>
+          
+          <!-- Test Item 3 -->
+          <div class="checklist-item" data-test-id="3">
+            <input type="checkbox" class="checklist-checkbox" id="test-3">
+            <div class="checklist-content">
+              <label for="test-3" class="checklist-text">"Show only matches" toggle works</label>
+              <span class="checklist-tooltip" title="Enable toggle on Dashboard, verify only jobs above your threshold are shown">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                How to test
+              </span>
+            </div>
+          </div>
+          
+          <!-- Test Item 4 -->
+          <div class="checklist-item" data-test-id="4">
+            <input type="checkbox" class="checklist-checkbox" id="test-4">
+            <div class="checklist-content">
+              <label for="test-4" class="checklist-text">Save job persists after refresh</label>
+              <span class="checklist-tooltip" title="Save a job on Dashboard, refresh page, verify it's still saved">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                How to test
+              </span>
+            </div>
+          </div>
+          
+          <!-- Test Item 5 -->
+          <div class="checklist-item" data-test-id="5">
+            <input type="checkbox" class="checklist-checkbox" id="test-5">
+            <div class="checklist-content">
+              <label for="test-5" class="checklist-text">Apply opens in new tab</label>
+              <span class="checklist-tooltip" title="Click Apply button on any job, verify it opens in a new tab">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                How to test
+              </span>
+            </div>
+          </div>
+          
+          <!-- Test Item 6 -->
+          <div class="checklist-item" data-test-id="6">
+            <input type="checkbox" class="checklist-checkbox" id="test-6">
+            <div class="checklist-content">
+              <label for="test-6" class="checklist-text">Status update persists after refresh</label>
+              <span class="checklist-tooltip" title="Change job status on Dashboard, refresh page, verify status is still set">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                How to test
+              </span>
+            </div>
+          </div>
+          
+          <!-- Test Item 7 -->
+          <div class="checklist-item" data-test-id="7">
+            <input type="checkbox" class="checklist-checkbox" id="test-7">
+            <div class="checklist-content">
+              <label for="test-7" class="checklist-text">Status filter works correctly</label>
+              <span class="checklist-tooltip" title="Use Status filter on Dashboard, verify only jobs with that status are shown">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                How to test
+              </span>
+            </div>
+          </div>
+          
+          <!-- Test Item 8 -->
+          <div class="checklist-item" data-test-id="8">
+            <input type="checkbox" class="checklist-checkbox" id="test-8">
+            <div class="checklist-content">
+              <label for="test-8" class="checklist-text">Digest generates top 10 by score</label>
+              <span class="checklist-tooltip" title="Go to Digest, generate digest, verify top 10 highest scoring jobs are shown">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                How to test
+              </span>
+            </div>
+          </div>
+          
+          <!-- Test Item 9 -->
+          <div class="checklist-item" data-test-id="9">
+            <input type="checkbox" class="checklist-checkbox" id="test-9">
+            <div class="checklist-content">
+              <label for="test-9" class="checklist-text">Digest persists for the day</label>
+              <span class="checklist-tooltip" title="Generate digest, refresh page, verify digest loads automatically">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                How to test
+              </span>
+            </div>
+          </div>
+          
+          <!-- Test Item 10 -->
+          <div class="checklist-item" data-test-id="10">
+            <input type="checkbox" class="checklist-checkbox" id="test-10">
+            <div class="checklist-content">
+              <label for="test-10" class="checklist-text">No console errors on main pages</label>
+              <span class="checklist-tooltip" title="Open browser console, navigate through all pages, verify no errors appear">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                How to test
+              </span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <!-- Controls -->
+      <div class="test-controls">
+        <button id="reset-btn" class="btn btn-secondary">Reset Test Status</button>
+      </div>
+      
+      <!-- Ship Navigation -->
+      <div class="ship-navigation">
+        <a href="08-ship.html" class="btn btn-primary" id="ship-link">Proceed to Ship</a>
+      </div>
+      
+    </div>
+  </main>
+
+  <script src="../routes/navigation.js"></script>
+  <script src="test-checklist.js"></script>
+</body>
+</html>
