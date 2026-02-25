@@ -1,0 +1,159 @@
+/* ============================================
+   ERROR STATES
+   Clear explanations, helpful guidance
+   Never blame the user
+   ============================================ */
+
+:root {
+  --error-icon-size: 48px;
+  --error-transition: 150ms ease-in-out;
+}
+
+/* Error Container */
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-5);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Error Icon */
+.error-icon {
+  width: var(--error-icon-size);
+  height: var(--error-icon-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-error-bg);
+  border-radius: 50%;
+  margin-bottom: var(--space-3);
+}
+
+.error-icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-error);
+}
+
+/* Error Title */
+.error-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+/* Error Message */
+.error-message {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-3);
+}
+
+/* Error Actions */
+.error-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Inline Error */
+.inline-error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error);
+  border-radius: var(--card-border-radius);
+  margin-top: var(--space-2);
+}
+
+.inline-error-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--color-error);
+}
+
+.inline-error-content {
+  flex: 1;
+}
+
+.inline-error-title {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  margin-bottom: 2px;
+}
+
+.inline-error-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Form Field Error */
+.form-error {
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+  margin-top: var(--space-1);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.form-error::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-error);
+  border-radius: 50%;
+}
+
+/* Input Error State */
+.input-error {
+  border-color: var(--color-error);
+}
+
+.input-error:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.1);
+}
+
+/* Toast/Notification Error */
+.toast-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-error-bg);
+  border-left: 3px solid var(--color-error);
+  border-radius: 0 var(--card-border-radius) var(--card-border-radius) 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.toast-error-icon {
+  flex-shrink: 0;
+  color: var(--color-error);
+}
+
+.toast-error-content {
+  flex: 1;
+}
+
+.toast-error-title {
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.toast-error-message {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}

@@ -1,0 +1,99 @@
+/* ============================================
+   PROOF FOOTER
+   Checklist style: UI Built, Logic Working, Test Passed, Deployed
+   ============================================ */
+
+.proof-footer {
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-3) 0;
+  margin-top: auto;
+}
+
+.proof-footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Checklist */
+.proof-checklist {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.checklist-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: color 150ms ease-in-out;
+}
+
+.checklist-item:hover {
+  color: var(--color-text-primary);
+}
+
+/* Custom Checkbox */
+.checklist-item input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+  flex-shrink: 0;
+}
+
+.checklist-item input[type="checkbox"]:hover {
+  border-color: var(--color-text-secondary);
+}
+
+.checklist-item input[type="checkbox"]:checked {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.checklist-item input[type="checkbox"]:checked::after {
+  content: '';
+  width: 5px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+  margin-bottom: 2px;
+}
+
+.checklist-item.checked {
+  color: var(--color-success);
+  text-decoration: line-through;
+}
+
+/* Footer Info */
+.proof-footer-info {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .proof-footer .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .proof-checklist {
+    gap: var(--space-2);
+  }
+}

@@ -1,0 +1,81 @@
+/* ============================================
+   BADGE COMPONENTS
+   Status badges: Not Started, In Progress, Shipped
+   Muted backgrounds, clear semantics
+   ============================================ */
+
+:root {
+  --badge-border-radius: 4px;
+  --badge-padding: var(--space-1) var(--space-2);
+  --badge-font-size: var(--font-size-xs);
+  --badge-font-weight: var(--font-weight-medium);
+  --badge-transition: 150ms ease-in-out;
+}
+
+/* Base Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--badge-padding);
+  font-family: var(--font-body);
+  font-size: var(--badge-font-size);
+  font-weight: var(--badge-font-weight);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--badge-border-radius);
+  transition: all var(--badge-transition);
+}
+
+/* Status Badges */
+.badge-not-started {
+  background-color: var(--color-status-not-started-bg);
+  color: var(--color-status-not-started);
+}
+
+.badge-in-progress {
+  background-color: var(--color-status-in-progress-bg);
+  color: var(--color-status-in-progress);
+}
+
+.badge-shipped {
+  background-color: var(--color-status-shipped-bg);
+  color: var(--color-status-shipped);
+}
+
+/* Semantic Badges */
+.badge-success {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.badge-warning {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.badge-error {
+  background-color: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+/* Badge Sizes */
+.badge-sm {
+  padding: 4px var(--space-1);
+  font-size: 10px;
+}
+
+.badge-lg {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+/* Badge with Dot */
+.badge-dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}

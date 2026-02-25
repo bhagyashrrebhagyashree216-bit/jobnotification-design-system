@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Notification App - Design System Demo</title>
+  <link rel="stylesheet" href="../design-system/design-system.css">
+</head>
+<body>
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="app">
+    <!-- TOP BAR -->
+    <header class="top-bar">
+      <div class="container">
+        <a href="#" class="app-name">Job Notification App</a>
+        
+        <div class="top-bar-progress">
+          <div class="progress-compact">
+            <div class="progress-dots">
+              <span class="progress-dot completed"></span>
+              <span class="progress-dot completed"></span>
+              <span class="progress-dot active"></span>
+              <span class="progress-dot"></span>
+              <span class="progress-dot"></span>
+            </div>
+            <span class="progress-steps">
+              <span class="current">Step 3</span>
+              <span class="total">/ 5</span>
+            </span>
+          </div>
+        </div>
+        
+        <div class="top-bar-status">
+          <span class="badge badge-in-progress">In Progress</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTEXT HEADER -->
+    <section class="context-header">
+      <div class="container">
+        <div class="context-header-content">
+          <h1>Design System Foundation</h1>
+          <p>A calm, intentional foundation for building premium job notification experiences.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN WORKSPACE -->
+    <main id="main-content" class="container">
+      <div class="workspace">
+        <!-- PRIMARY WORKSPACE (70%) -->
+        <div class="workspace-primary">
+          <!-- Component Showcase Card -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Component Library</h3>
+            </div>
+            <div class="card-body">
+              <p>Preview of all design system components. Each element follows the strict 4-color palette and intentional spacing scale.</p>
+              
+              <div class="divider"></div>
+              
+              <!-- Buttons -->
+              <h4 style="font-family: var(--font-heading); font-size: var(--font-size-md); margin-bottom: var(--space-2);">Buttons</h4>
+              <div class="flex gap-2 mb-3">
+                <button class="btn btn-primary">Primary Button</button>
+                <button class="btn btn-secondary">Secondary Button</button>
+                <button class="btn btn-primary" disabled>Disabled</button>
+              </div>
+
+              <!-- Inputs -->
+              <h4 style="font-family: var(--font-heading); font-size: var(--font-size-md); margin: var(--space-3) 0 var(--space-2);">Form Inputs</h4>
+              <div class="form-group mb-3">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="input" placeholder="Enter your email">
+                <span class="form-hint">We'll never share your email with anyone.</span>
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-label">Job Preferences</label>
+                <select class="input select">
+                  <option>Select a category</option>
+                  <option>Software Engineering</option>
+                  <option>Product Management</option>
+                  <option>Design</option>
+                </select>
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-label">Description</label>
+                <textarea class="input textarea" placeholder="Describe your ideal role..."></textarea>
+              </div>
+
+              <!-- Badges -->
+              <h4 style="font-family: var(--font-heading); font-size: var(--font-size-md); margin: var(--space-3) 0 var(--space-2);">Status Badges</h4>
+              <div class="flex gap-2 mb-3">
+                <span class="badge badge-not-started">Not Started</span>
+                <span class="badge badge-in-progress">In Progress</span>
+                <span class="badge badge-shipped">Shipped</span>
+              </div>
+
+              <!-- Checkboxes -->
+              <h4 style="font-family: var(--font-heading); font-size: var(--font-size-md); margin: var(--space-3) 0 var(--space-2);">Selections</h4>
+              <div class="flex flex-col gap-2 mb-3">
+                <label class="checkbox">
+                  <input type="checkbox" checked>
+                  <span>Remote positions only</span>
+                </label>
+                <label class="checkbox">
+                  <input type="checkbox">
+                  <span>Full-time roles</span>
+                </label>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-secondary">Cancel</button>
+              <button class="btn btn-primary">Save Changes</button>
+            </div>
+          </div>
+
+          <!-- State Examples Card -->
+          <div class="card">
+            <div class="card-header">
+              <h3>State Examples</h3>
+            </div>
+            <div class="card-body">
+              <!-- Inline Error Example -->
+              <div class="inline-error mb-3">
+                <svg class="inline-error-icon" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 12a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0-3a1 1 0 0 1-1-1V4a1 1 0 0 1 2 0v4a1 1 0 0 1-1 1z"/>
+                </svg>
+                <div class="inline-error-content">
+                  <div class="inline-error-title">Connection failed</div>
+                  <div class="inline-error-text">Unable to reach the server. Please check your internet connection and try again.</div>
+                </div>
+              </div>
+
+              <!-- Empty State Example -->
+              <div class="inline-empty">
+                <div class="inline-empty-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/>
+                  </svg>
+                </div>
+                <div class="inline-empty-text">No notifications yet</div>
+                <button class="btn btn-primary btn-sm">Create Alert</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECONDARY PANEL (30%) -->
+        <div class="workspace-secondary">
+          <!-- Step Explanation -->
+          <div class="panel-section">
+            <h4>Current Step</h4>
+            <p>Building the design system foundation establishes the visual language for all future product development.</p>
+            <ol>
+              <li>Define color palette and typography</li>
+              <li>Create component primitives</li>
+              <li>Establish layout patterns</li>
+              <li>Document state behaviors</li>
+            </ol>
+          </div>
+
+          <!-- Copyable Prompt Box -->
+          <div class="panel-section">
+            <h4>Design Tokens</h4>
+            <p>Copy these values for consistent implementation:</p>
+            <div class="prompt-box mt-2">
+Background: #F7F6F3
+Text: #111111
+Accent: #8B0000
+Border: #E5E5E5
+
+Spacing:
+8px, 16px, 24px, 40px, 64px
+            </div>
+          </div>
+
+          <!-- Progress Visual -->
+          <div class="panel-section">
+            <h4>Progress Overview</h4>
+            <div class="progress-bar mt-3">
+              <div class="progress-step completed">1</div>
+              <div class="progress-line completed"></div>
+              <div class="progress-step completed">2</div>
+              <div class="progress-line completed"></div>
+              <div class="progress-step active">3</div>
+              <div class="progress-line"></div>
+              <div class="progress-step">4</div>
+              <div class="progress-line"></div>
+              <div class="progress-step">5</div>
+            </div>
+            <p class="mt-3">Step 3 of 5: Design System Implementation</p>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="panel-section">
+            <h4>Quick Actions</h4>
+            <div class="flex flex-col gap-2 mt-2">
+              <button class="btn btn-primary w-full">Continue to Next Step</button>
+              <button class="btn btn-secondary w-full">Save Progress</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- PROOF FOOTER -->
+    <footer class="proof-footer">
+      <div class="container">
+        <div class="proof-checklist">
+          <label class="checklist-item checked">
+            <input type="checkbox" checked>
+            <span>UI Built</span>
+          </label>
+          <label class="checklist-item checked">
+            <input type="checkbox" checked>
+            <span>Logic Working</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Test Passed</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox">
+            <span>Deployed</span>
+          </label>
+        </div>
+        <div class="proof-footer-info">
+          Design System v1.0
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

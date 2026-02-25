@@ -1,0 +1,101 @@
+/* ============================================
+   CARD COMPONENTS
+   Subtle border, no drop shadows
+   Clean, predictable structure
+   ============================================ */
+
+:root {
+  --card-border-radius: 6px;
+  --card-border-color: var(--color-border);
+  --card-background: var(--color-surface);
+  --card-padding: var(--space-3);
+}
+
+/* Base Card */
+.card {
+  background-color: var(--card-background);
+  border: 1px solid var(--card-border-color);
+  border-radius: var(--card-border-radius);
+  padding: var(--card-padding);
+}
+
+/* Card Header */
+.card-header {
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.card-header h3,
+.card-header h4 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+}
+
+/* Card Body */
+.card-body {
+  /* Default body styling */
+}
+
+.card-body p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+.card-body p + p {
+  margin-top: var(--space-2);
+}
+
+/* Card Footer */
+.card-footer {
+  padding-top: var(--space-2);
+  margin-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+/* Card Variants */
+.card-quiet {
+  background-color: transparent;
+  border-color: transparent;
+  padding: var(--space-2);
+}
+
+.card-bordered {
+  border-color: var(--color-border-strong);
+}
+
+/* Prompt Box (Special Card) */
+.prompt-box {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--card-border-radius);
+  padding: var(--space-3);
+  font-family: monospace;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Copyable Prompt Box */
+.prompt-box-copyable {
+  position: relative;
+}
+
+.prompt-box-copyable .btn {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.prompt-box-copyable:hover .btn {
+  opacity: 1;
+}

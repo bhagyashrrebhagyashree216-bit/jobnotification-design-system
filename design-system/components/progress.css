@@ -1,0 +1,111 @@
+/* ============================================
+   PROGRESS INDICATOR COMPONENTS
+   Step X / Y indicator
+   Clean, minimal, informative
+   ============================================ */
+
+:root {
+  --progress-step-size: 32px;
+  --progress-line-height: 2px;
+  --progress-transition: 150ms ease-in-out;
+}
+
+/* Progress Container */
+.progress-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Step Counter (Text Style) */
+.progress-steps {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.progress-steps .current {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.progress-steps .total {
+  color: var(--color-text-muted);
+}
+
+/* Visual Step Indicator */
+.progress-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.progress-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--progress-step-size);
+  height: var(--progress-step-size);
+  border-radius: 50%;
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  border: 2px solid var(--color-border-strong);
+  background-color: var(--color-surface);
+  color: var(--color-text-muted);
+  transition: all var(--progress-transition);
+}
+
+.progress-step.completed {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+  color: white;
+}
+
+.progress-step.active {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.progress-line {
+  width: 24px;
+  height: var(--progress-line-height);
+  background-color: var(--color-border);
+  transition: background-color var(--progress-transition);
+}
+
+.progress-line.completed {
+  background-color: var(--color-success);
+}
+
+/* Compact Progress */
+.progress-compact {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.progress-compact .progress-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-border);
+  transition: background-color var(--progress-transition);
+}
+
+.progress-dot.active {
+  background-color: var(--color-accent);
+}
+
+.progress-dot.completed {
+  background-color: var(--color-success);
+}

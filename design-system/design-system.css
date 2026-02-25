@@ -1,0 +1,106 @@
+/* ============================================
+   JOB NOTIFICATION APP - DESIGN SYSTEM
+   Premium SaaS Design System
+   
+   Philosophy:
+   - Calm, intentional, coherent, confident
+   - Not flashy, not playful, not hackathon-style
+   - No gradients, no glassmorphism, no neon colors
+   - Maximum 4 colors across entire UI
+   ============================================ */
+
+/*
+ * GOOGLE FONTS
+ * Playfair Display - Serif headings
+ * Inter - Clean sans-serif body
+ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
+@import url('tokens/colors.css');
+@import url('tokens/typography.css');
+@import url('tokens/spacing.css');
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+@import url('layout/global-layout.css');
+@import url('layout/top-bar.css');
+@import url('layout/context-header.css');
+@import url('layout/workspace.css');
+@import url('layout/proof-footer.css');
+
+/* ============================================
+   COMPONENTS
+   ============================================ */
+@import url('components/buttons.css');
+@import url('components/inputs.css');
+@import url('components/cards.css');
+@import url('components/badges.css');
+@import url('components/progress.css');
+
+/* ============================================
+   STATES
+   ============================================ */
+@import url('states/error-states.css');
+@import url('states/empty-states.css');
+@import url('states/focus-states.css');
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Display */
+.block { display: block; }
+.inline { display: inline; }
+.inline-block { display: inline-block; }
+.flex { display: flex; }
+.inline-flex { display: inline-flex; }
+.grid { display: grid; }
+.hidden { display: none; }
+
+/* Flexbox */
+.flex-row { flex-direction: row; }
+.flex-col { flex-direction: column; }
+.items-start { align-items: flex-start; }
+.items-center { align-items: center; }
+.items-end { align-items: flex-end; }
+.justify-start { justify-content: flex-start; }
+.justify-center { justify-content: center; }
+.justify-end { justify-content: flex-end; }
+.justify-between { justify-content: space-between; }
+.flex-1 { flex: 1; }
+.flex-wrap { flex-wrap: wrap; }
+
+/* Width & Height */
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.min-h-screen { min-height: 100vh; }
+
+/* Text Alignment */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* Font Weight */
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+
+/* Cursor */
+.cursor-pointer { cursor: pointer; }
+.cursor-not-allowed { cursor: not-allowed; }
+
+/* Overflow */
+.overflow-hidden { overflow: hidden; }
+.overflow-auto { overflow: auto; }
+.overflow-scroll { overflow: scroll; }
+
+/* Position */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.sticky { position: sticky; }

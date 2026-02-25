@@ -1,0 +1,70 @@
+/* ============================================
+   TOP BAR
+   Left: App name | Center: Progress indicator | Right: Status badge
+   ============================================ */
+
+.top-bar {
+  height: var(--layout-top-bar-height);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+}
+
+.top-bar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* App Name */
+.app-name {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.app-name:hover {
+  color: var(--color-accent);
+}
+
+/* Progress Indicator (Center) */
+.top-bar-progress {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Status Badge (Right) */
+.top-bar-status {
+  margin-left: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .top-bar .container {
+    position: relative;
+  }
+
+  .top-bar-progress {
+    position: static;
+    transform: none;
+    order: 3;
+    width: 100%;
+    margin-top: var(--space-1);
+    display: none;
+  }
+
+  .top-bar {
+    height: auto;
+    padding: var(--space-2) 0;
+  }
+
+  .top-bar .container {
+    flex-wrap: wrap;
+  }
+}

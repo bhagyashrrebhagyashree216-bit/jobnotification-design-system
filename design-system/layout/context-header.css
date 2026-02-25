@@ -1,0 +1,52 @@
+/* ============================================
+   CONTEXT HEADER
+   Large serif headline + one-line subtext
+   Clear purpose, no hype language
+   ============================================ */
+
+.context-header {
+  background-color: var(--color-background);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.context-header-content {
+  max-width: var(--text-max-width);
+}
+
+.context-header h1 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.context-header p {
+  font-family: var(--font-body);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-2);
+  max-width: var(--text-max-width);
+}
+
+/* Context Header Variants */
+.context-header-compact {
+  padding: var(--space-4) 0;
+}
+
+.context-header-compact h1 {
+  font-size: var(--font-size-2xl);
+}
+
+.context-header-minimal {
+  padding: var(--space-3) 0;
+  border-bottom: none;
+}
+
+.context-header-minimal h1 {
+  font-size: var(--font-size-xl);
+}

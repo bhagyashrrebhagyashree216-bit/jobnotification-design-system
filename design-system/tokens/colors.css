@@ -1,0 +1,34 @@
+/* ============================================
+   COLOR TOKENS
+   Maximum 4-color system for calm, intentional UI
+   ============================================ */
+
+:root {
+  /* Primary Palette */
+  --color-background: #F7F6F3;
+  --color-text-primary: #111111;
+  --color-accent: #8B0000;
+
+  /* Utility Colors (muted variants) */
+  --color-border: #E5E5E5;
+  --color-border-strong: #CCCCCC;
+  --color-surface: #FFFFFF;
+  --color-text-secondary: #666666;
+  --color-text-muted: #999999;
+
+  /* Semantic Colors */
+  --color-success: #5A7D5A;
+  --color-success-bg: #F0F5F0;
+  --color-warning: #B8860B;
+  --color-warning-bg: #FDF8E8;
+  --color-error: #8B0000;
+  --color-error-bg: #FDF2F2;
+
+  /* Status Badge Colors */
+  --color-status-not-started: #999999;
+  --color-status-not-started-bg: #F5F5F5;
+  --color-status-in-progress: #B8860B;
+  --color-status-in-progress-bg: #FDF8E8;
+  --color-status-shipped: #5A7D5A;
+  --color-status-shipped-bg: #F0F5F0;
+}
