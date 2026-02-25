@@ -6,6 +6,238 @@
   <title>Digest | Job Notification Tracker</title>
   <link rel="stylesheet" href="../design-system/design-system.css">
   <link rel="stylesheet" href="navigation.css">
+  <style>
+    /* Digest Page Styles */
+    .digest-page {
+      min-height: calc(100vh - 60px);
+      padding: var(--space-5) 0;
+    }
+    
+    .digest-container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    
+    .digest-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+    }
+    
+    .digest-actions {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+    
+    .demo-note {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      font-style: italic;
+      margin-top: var(--space-1);
+    }
+    
+    /* Email-style Digest Card */
+    .digest-email {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-border-radius);
+      padding: var(--space-5);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    
+    .digest-header {
+      text-align: center;
+      padding-bottom: var(--space-4);
+      margin-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+    
+    .digest-header h1 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-1);
+      color: var(--color-text-primary);
+    }
+    
+    .digest-header .digest-date {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+    
+    .digest-job-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    
+    .digest-job-item {
+      padding: var(--space-3);
+      background-color: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-border-radius);
+      transition: border-color 150ms ease-in-out;
+    }
+    
+    .digest-job-item:hover {
+      border-color: var(--color-border-strong);
+    }
+    
+    .digest-job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-2);
+      margin-bottom: var(--space-2);
+    }
+    
+    .digest-job-title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin: 0;
+      line-height: 1.3;
+    }
+    
+    .digest-job-company {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin-top: 4px;
+    }
+    
+    .digest-job-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+    
+    .digest-job-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .digest-job-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .digest-match-score {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+    }
+    
+    .digest-match-score.excellent {
+      color: var(--color-success);
+    }
+    
+    .digest-match-score.good {
+      color: var(--color-warning);
+    }
+    
+    .digest-match-score.fair {
+      color: var(--color-text-secondary);
+    }
+    
+    .digest-match-score.low {
+      color: var(--color-text-muted);
+    }
+    
+    .digest-footer {
+      text-align: center;
+      padding-top: var(--space-4);
+      margin-top: var(--space-4);
+      border-top: 1px solid var(--color-border);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+    }
+    
+    /* Blocking Message */
+    .digest-blocking {
+      text-align: center;
+      padding: var(--space-5);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    
+    .digest-blocking h2 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-2);
+    }
+    
+    .digest-blocking p {
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-3);
+    }
+    
+    /* Empty State */
+    .digest-empty {
+      text-align: center;
+      padding: var(--space-5);
+    }
+    
+    .digest-empty h3 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-2);
+    }
+    
+    .digest-empty p {
+      color: var(--color-text-secondary);
+    }
+    
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: var(--space-4);
+      right: var(--space-4);
+      background-color: var(--color-success);
+      color: white;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--card-border-radius);
+      font-size: var(--font-size-sm);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 300ms ease-out;
+      z-index: 1000;
+    }
+    
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    @media (max-width: 768px) {
+      .digest-email {
+        padding: var(--space-3);
+      }
+      
+      .digest-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .digest-actions {
+        justify-content: center;
+      }
+      
+      .digest-job-header {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Skip Link for Accessibility -->
@@ -34,19 +266,87 @@
   </nav>
 
   <!-- Page Content -->
-  <main id="main-content" class="page-content">
-    <div class="placeholder-page">
-      <div class="empty-icon" style="margin-bottom: var(--space-3);">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="32" height="32">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
+  <main id="main-content" class="page-content digest-page">
+    <div class="container digest-container">
+      
+      <!-- Controls -->
+      <div class="digest-controls" id="digest-controls">
+        <div>
+          <button id="generate-btn" class="btn btn-primary">
+            Generate Today's 9AM Digest (Simulated)
+          </button>
+          <p class="demo-note">Demo Mode: Daily 9AM trigger simulated manually.</p>
+        </div>
+        <div class="digest-actions" id="digest-actions" style="display: none;">
+          <button id="copy-btn" class="btn btn-secondary btn-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+            </svg>
+            Copy to Clipboard
+          </button>
+          <a id="email-btn" href="#" class="btn btn-secondary btn-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Create Email Draft
+          </a>
+        </div>
       </div>
-      <h1>Your Daily Digest</h1>
-      <p style="max-width: 440px;">Every morning at 9AM, receive a curated summary of jobs matching your preferences. Configure your settings to get started.</p>
-      <a href="settings.html" class="btn btn-primary" style="margin-top: var(--space-3);">Set Up Digest</a>
+      
+      <!-- Blocking Message (No Preferences) -->
+      <div id="blocking-message" class="digest-blocking" style="display: none;">
+        <div class="empty-icon" style="margin-bottom: var(--space-3);">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="48" height="48">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <h2>Set Preferences to Generate Digest</h2>
+        <p>Configure your job preferences to receive a personalized daily digest of matching opportunities.</p>
+        <a href="settings.html" class="btn btn-primary">Go to Settings</a>
+      </div>
+      
+      <!-- Empty State (No Matches) -->
+      <div id="empty-matches" class="digest-empty" style="display: none;">
+        <div class="empty-icon" style="margin-bottom: var(--space-3);">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" width="48" height="48">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+          </svg>
+        </div>
+        <h3>No Matching Roles Today</h3>
+        <p>No roles match your criteria right now. Check again tomorrow for new opportunities.</p>
+      </div>
+      
+      <!-- Digest Email Card -->
+      <div id="digest-content" style="display: none;">
+        <div class="digest-email">
+          <div class="digest-header">
+            <h1>Top 10 Jobs For You — 9AM Digest</h1>
+            <p class="digest-date" id="digest-date"></p>
+          </div>
+          
+          <div class="digest-job-list" id="digest-job-list">
+            <!-- Jobs will be rendered here -->
+          </div>
+          
+          <div class="digest-footer">
+            <p>This digest was generated based on your preferences.</p>
+          </div>
+        </div>
+      </div>
+      
     </div>
   </main>
+  
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">Copied to clipboard!</div>
 
+  <script src="jobs-data.js"></script>
+  <script src="preferences-engine.js"></script>
+  <script src="digest-engine.js"></script>
+  <script src="digest-app.js"></script>
   <script src="navigation.js"></script>
 </body>
 </html>
