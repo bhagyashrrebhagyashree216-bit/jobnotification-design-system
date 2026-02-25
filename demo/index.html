@@ -5,28 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Job Notification App - Design System Demo</title>
   <link rel="stylesheet" href="../design-system/design-system.css">
+  <link rel="stylesheet" href="../routes/navigation.css">
 </head>
 <body>
   <!-- Skip Link for Accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <!-- Main Navigation -->
+  <nav class="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="../routes/index.html" class="nav-brand">Job Notification App</a>
+      
+      <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation menu">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      
+      <ul class="nav-links">
+        <li><a href="../routes/index.html" class="nav-link">Dashboard</a></li>
+        <li><a href="../routes/saved.html" class="nav-link">Saved</a></li>
+        <li><a href="../routes/digest.html" class="nav-link">Digest</a></li>
+        <li><a href="../routes/settings.html" class="nav-link">Settings</a></li>
+        <li><a href="../routes/proof.html" class="nav-link">Proof</a></li>
+      </ul>
+    </div>
+  </nav>
+
   <div class="app">
     <!-- TOP BAR -->
     <header class="top-bar">
       <div class="container">
-        <a href="#" class="app-name">Job Notification App</a>
+        <a href="#" class="app-name">Design System Demo</a>
         
         <div class="top-bar-progress">
           <div class="progress-compact">
             <div class="progress-dots">
               <span class="progress-dot completed"></span>
               <span class="progress-dot completed"></span>
+              <span class="progress-dot completed"></span>
               <span class="progress-dot active"></span>
-              <span class="progress-dot"></span>
               <span class="progress-dot"></span>
             </div>
             <span class="progress-steps">
-              <span class="current">Step 3</span>
+              <span class="current">Step 4</span>
               <span class="total">/ 5</span>
             </span>
           </div>
@@ -42,8 +64,8 @@
     <section class="context-header">
       <div class="container">
         <div class="context-header-content">
-          <h1>Design System Foundation</h1>
-          <p>A calm, intentional foundation for building premium job notification experiences.</p>
+          <h1>Design System + Navigation</h1>
+          <p>Route skeleton and shared navigation shell with responsive mobile menu.</p>
         </div>
       </div>
     </section>
@@ -237,5 +259,7 @@ Spacing:
       </div>
     </footer>
   </div>
+
+  <script src="../routes/navigation.js"></script>
 </body>
 </html>
