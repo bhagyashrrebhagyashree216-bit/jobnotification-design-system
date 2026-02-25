@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/", "dest": "/routes/landing.html" },
+    { "src": "/dashboard", "dest": "/routes/index.html" },
+    { "src": "/saved", "dest": "/routes/saved.html" },
+    { "src": "/digest", "dest": "/routes/digest.html" },
+    { "src": "/settings", "dest": "/routes/settings.html" },
+    { "src": "/proof", "dest": "/routes/proof.html" },
+    { "src": "/test", "dest": "/jt/07-test.html" },
+    { "src": "/ship", "dest": "/jt/08-ship.html" },
+    { "src": "/jt/(.*)", "dest": "/jt/$1" },
+    { "src": "/routes/(.*)", "dest": "/routes/$1" },
+    { "src": "/design-system/(.*)", "dest": "/design-system/$1" },
+    { "src": "/demo/(.*)", "dest": "/demo/$1" }
+  ]
+}
