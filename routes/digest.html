@@ -219,6 +219,97 @@
       opacity: 1;
     }
     
+    /* Recent Status Updates */
+    .status-updates-section {
+      margin-top: var(--space-5);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border);
+    }
+    
+    .status-updates-section h2 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-3);
+      color: var(--color-text-primary);
+    }
+    
+    .status-updates-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    
+    .status-update-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-2) var(--space-3);
+      background-color: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--card-border-radius);
+    }
+    
+    .status-update-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .status-update-job {
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+    }
+    
+    .status-update-company {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+    
+    .status-update-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    
+    .status-update-badge {
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    
+    .status-update-badge.applied {
+      background-color: #dbeafe;
+      color: #1e40af;
+      border: 1px solid #93c5fd;
+    }
+    
+    .status-update-badge.rejected {
+      background-color: var(--color-error-bg);
+      color: var(--color-error);
+      border: 1px solid var(--color-error);
+    }
+    
+    .status-update-badge.selected {
+      background-color: var(--color-success-bg);
+      color: var(--color-success);
+      border: 1px solid var(--color-success);
+    }
+    
+    .status-update-date {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+    }
+    
+    .status-updates-empty {
+      text-align: center;
+      padding: var(--space-3);
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+    }
+    
     @media (max-width: 768px) {
       .digest-email {
         padding: var(--space-3);
@@ -335,6 +426,14 @@
             <p>This digest was generated based on your preferences.</p>
           </div>
         </div>
+        
+        <!-- Recent Status Updates -->
+        <div class="status-updates-section">
+          <h2>Recent Status Updates</h2>
+          <div id="status-updates-list" class="status-updates-list">
+            <!-- Status updates will be rendered here -->
+          </div>
+        </div>
       </div>
       
     </div>
@@ -345,6 +444,7 @@
 
   <script src="jobs-data.js"></script>
   <script src="preferences-engine.js"></script>
+  <script src="status-engine.js"></script>
   <script src="digest-engine.js"></script>
   <script src="digest-app.js"></script>
   <script src="navigation.js"></script>

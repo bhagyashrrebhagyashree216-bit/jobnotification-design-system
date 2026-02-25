@@ -102,6 +102,17 @@
             </select>
           </div>
           
+          <div class="filter-group">
+            <label for="filter-status">Status</label>
+            <select id="filter-status" name="status" class="input select">
+              <option value="">All Statuses</option>
+              <option value="Not Applied">Not Applied</option>
+              <option value="Applied">Applied</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Selected">Selected</option>
+            </select>
+          </div>
+          
           <div class="filter-actions">
             <button type="reset" class="btn btn-secondary">Reset</button>
             <button type="submit" class="btn btn-primary">Apply Filters</button>
@@ -150,7 +161,11 @@
 
   <script src="jobs-data.js"></script>
   <script src="preferences-engine.js"></script>
+  <script src="status-engine.js"></script>
   <script src="dashboard-app.js"></script>
   <script src="navigation.js"></script>
+  
+  <!-- Toast Container -->
+  <div id="toast" class="toast"></div>
 </body>
 </html>

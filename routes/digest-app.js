@@ -21,6 +21,7 @@
   let copyBtn;
   let emailBtn;
   let toast;
+  let statusUpdatesList;
 
   // Initialize
   document.addEventListener('DOMContentLoaded', function() {
@@ -39,6 +40,7 @@
     copyBtn = document.getElementById('copy-btn');
     emailBtn = document.getElementById('email-btn');
     toast = document.getElementById('toast');
+    statusUpdatesList = document.getElementById('status-updates-list');
 
     // Load preferences
     loadPreferences();
@@ -130,6 +132,9 @@
     // Render digest
     renderDigest(currentDigest);
     showDigest();
+    
+    // Render status updates
+    renderStatusUpdates();
   }
 
   // Load existing digest from localStorage
@@ -264,6 +269,44 @@
     setTimeout(function() {
       toast.classList.remove('show');
     }, 3000);
+  }
+  
+  // Render status updates
+  function renderStatusUpdates() {
+    if (!statusUpdatesList || typeof window.statusEngine === 'undefined' || typeof jobsData === 'undefined') {
+      return;
+    }
+    
+    const updates = window.statusEngine.getRecentStatusUpdates(jobsData, 10);
+    
+    if (updates.length === 0) {
+      statusUpdatesList.innerHTML = '<div class="status-updates-empty">No status updates yet. Change job statuses on the dashboard.</div>';
+      return;
+    }
+    
+    statusUpdatesList.innerHTML = updates.map(update => createStatusUpdateItem(update)).join('');
+  }
+  
+  // Create status update item HTML
+  function createStatusUpdateItem(update) {
+    if (!update.job) return '';
+    
+    const statusClass = update.status.toLowerCase().replace(' ', '-');
+    const date = new Date(update.timestamp);
+    const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    
+    return `
+      <div class="status-update-item">
+        <div class="status-update-info">
+          <span class="status-update-job">${escapeHtml(update.job.title)}</span>
+          <span class="status-update-company">${escapeHtml(update.job.company)}</span>
+        </div>
+        <div class="status-update-meta">
+          <span class="status-update-badge ${statusClass}">${update.status}</span>
+          <span class="status-update-date">${dateStr}</span>
+        </div>
+      </div>
+    `;
   }
 
   // Escape HTML

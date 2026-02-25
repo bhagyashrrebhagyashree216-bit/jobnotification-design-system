@@ -16,7 +16,8 @@
     location: '',
     mode: '',
     experience: '',
-    source: ''
+    source: '',
+    status: ''
   };
   let currentSort = 'latest';
 
@@ -30,6 +31,7 @@
   let matchToggleContainer;
   let matchToggle;
   let emptyStateMessage;
+  let toast;
 
   // Initialize
   document.addEventListener('DOMContentLoaded', function() {
@@ -88,6 +90,9 @@
         applyFilters();
       });
     }
+    
+    // Toast element
+    toast = document.getElementById('toast');
     
     // Modal close handlers
     if (modal) {
@@ -210,7 +215,8 @@
       location: formData.get('location') || '',
       mode: formData.get('mode') || '',
       experience: formData.get('experience') || '',
-      source: formData.get('source') || ''
+      source: formData.get('source') || '',
+      status: formData.get('status') || ''
     };
     
     // Filter jobs using AND logic
@@ -241,6 +247,16 @@
       // Source filter
       if (currentFilters.source && job.source !== currentFilters.source) {
         return false;
+      }
+      
+      // Status filter
+      if (currentFilters.status) {
+        const jobStatus = typeof window.statusEngine !== 'undefined' 
+          ? window.statusEngine.getJobStatus(job.id) 
+          : 'Not Applied';
+        if (jobStatus !== currentFilters.status) {
+          return false;
+        }
       }
       
       // Match score filter (if toggle is enabled)
@@ -337,10 +353,21 @@
     const matchScore = getMatchScore(job);
     const matchScoreHtml = matchScore !== null ? createMatchScoreBadge(matchScore) : '';
     
+    // Get job status
+    const jobStatus = typeof window.statusEngine !== 'undefined' 
+      ? window.statusEngine.getJobStatus(job.id) 
+      : 'Not Applied';
+    const statusClass = typeof window.statusEngine !== 'undefined'
+      ? window.statusEngine.getStatusBadgeClass(jobStatus)
+      : 'not-started';
+    
     // Get top 3 skills for preview
     const skillsPreview = job.skills.slice(0, 3).map(skill => 
       `<span class="skill-tag">${escapeHtml(skill)}</span>`
     ).join('');
+    
+    // Create status selector buttons
+    const statusButtons = createStatusButtons(job.id, jobStatus);
     
     return `
       <div class="job-card" data-job-id="${job.id}">
@@ -355,6 +382,11 @@
         
         <div class="job-skills-preview">
           ${skillsPreview}
+        </div>
+        
+        <!-- Status Selector -->
+        <div class="status-selector">
+          ${statusButtons}
         </div>
         
         <div class="job-details">
@@ -394,6 +426,24 @@
     `;
   }
 
+  // Create status buttons HTML
+  function createStatusButtons(jobId, currentStatus) {
+    const statuses = ['Not Applied', 'Applied', 'Rejected', 'Selected'];
+    const statusClasses = {
+      'Not Applied': 'status-not-applied',
+      'Applied': 'status-applied',
+      'Rejected': 'status-rejected',
+      'Selected': 'status-selected'
+    };
+    
+    return statuses.map(status => {
+      const isActive = status === currentStatus;
+      const activeClass = isActive ? 'active' : '';
+      const statusClass = statusClasses[status];
+      return `<button class="status-btn ${activeClass} ${statusClass}" data-job-id="${jobId}" data-status="${status}">${status}</button>`;
+    }).join('');
+  }
+
   // Attach event listeners to job card buttons
   function attachJobCardListeners() {
     // View buttons
@@ -411,6 +461,45 @@
         toggleSaveJob(jobId);
       });
     });
+    
+    // Status buttons
+    document.querySelectorAll('.status-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const jobId = parseInt(this.dataset.jobId);
+        const status = this.dataset.status;
+        handleStatusChange(jobId, status);
+      });
+    });
+  }
+  
+  // Handle status change
+  function handleStatusChange(jobId, status) {
+    if (typeof window.statusEngine === 'undefined') return;
+    
+    const changed = window.statusEngine.setJobStatus(jobId, status);
+    
+    if (changed) {
+      // Re-render to show updated status
+      renderJobs();
+      
+      // Show toast notification
+      const toastType = status === 'Selected' ? 'toast-success' : 
+                        status === 'Rejected' ? 'toast-error' : 'toast-info';
+      showToast(`Status updated: ${status}`, toastType);
+    }
+  }
+  
+  // Show toast notification
+  function showToast(message, type = 'toast-info') {
+    if (!toast) return;
+    
+    toast.textContent = message;
+    toast.className = 'toast ' + type;
+    toast.classList.add('show');
+    
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 3000);
   }
 
   // Open job modal
