@@ -6,6 +6,7 @@
   <title>Dashboard | Job Notification Tracker</title>
   <link rel="stylesheet" href="../design-system/design-system.css">
   <link rel="stylesheet" href="navigation.css">
+  <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
   <!-- Skip Link for Accessibility -->
@@ -35,12 +36,106 @@
 
   <!-- Page Content -->
   <main id="main-content" class="page-content">
-    <div class="placeholder-page">
-      <h1>Dashboard</h1>
-      <p>No jobs yet. In the next step, you will load a realistic dataset.</p>
+    <div class="container dashboard-container">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <h1>Job Dashboard</h1>
+        <p>Discover 60+ curated tech opportunities from top Indian companies</p>
+      </div>
+      
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <form id="filter-form" class="filter-form">
+          <div class="filter-group">
+            <label for="filter-keyword">Keyword</label>
+            <input type="text" id="filter-keyword" name="keyword" class="input" placeholder="Search title, company, skills...">
+          </div>
+          
+          <div class="filter-group">
+            <label for="filter-location">Location</label>
+            <select id="filter-location" name="location" class="input select">
+              <option value="">All Locations</option>
+              <option value="Bangalore">Bangalore</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="Chennai">Chennai</option>
+              <option value="Pune">Pune</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Gurgaon">Gurgaon</option>
+              <option value="Noida">Noida</option>
+              <option value="Kolkata">Kolkata</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="filter-mode">Work Mode</label>
+            <select id="filter-mode" name="mode" class="input select">
+              <option value="">All Modes</option>
+              <option value="Remote">Remote</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="Onsite">Onsite</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="filter-experience">Experience</label>
+            <select id="filter-experience" name="experience" class="input select">
+              <option value="">All Levels</option>
+              <option value="Fresher">Fresher</option>
+              <option value="0-1">0-1 Years</option>
+              <option value="1-3">1-3 Years</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="filter-source">Source</label>
+            <select id="filter-source" name="source" class="input select">
+              <option value="">All Sources</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Naukri">Naukri</option>
+              <option value="Indeed">Indeed</option>
+            </select>
+          </div>
+          
+          <div class="filter-actions">
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Sort Bar -->
+      <div class="sort-bar">
+        <span class="results-count" id="results-count">Loading jobs...</span>
+        <div class="sort-group">
+          <label for="sort-select">Sort by:</label>
+          <select id="sort-select" class="input select">
+            <option value="latest">Latest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="salary-high">Salary: High to Low</option>
+            <option value="salary-low">Salary: Low to High</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- Jobs Grid -->
+      <div id="jobs-container" class="jobs-grid"></div>
+      
+      <!-- Empty State -->
+      <div id="empty-state" class="dashboard-empty" style="display: none;">
+        <h3>No jobs match your search</h3>
+        <p>Try adjusting your filters or search criteria to find more opportunities.</p>
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('filter-form').reset();">Clear Filters</button>
+      </div>
     </div>
   </main>
+  
+  <!-- Job Detail Modal -->
+  <div id="job-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div id="modal-content" class="modal-content"></div>
+  </div>
 
+  <script src="jobs-data.js"></script>
+  <script src="dashboard-app.js"></script>
   <script src="navigation.js"></script>
 </body>
 </html>
