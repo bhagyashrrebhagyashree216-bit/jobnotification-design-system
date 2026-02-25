@@ -43,6 +43,12 @@
         <p>Discover 60+ curated tech opportunities from top Indian companies</p>
       </div>
       
+      <!-- Preferences Banner -->
+      <div id="preferences-banner" class="preferences-banner" style="display: none;">
+        <p>Set your preferences to activate intelligent matching.</p>
+        <a href="settings.html" class="btn btn-primary btn-sm">Set Preferences</a>
+      </div>
+      
       <!-- Filter Bar -->
       <div class="filter-bar">
         <form id="filter-form" class="filter-form">
@@ -106,14 +112,22 @@
       <!-- Sort Bar -->
       <div class="sort-bar">
         <span class="results-count" id="results-count">Loading jobs...</span>
-        <div class="sort-group">
-          <label for="sort-select">Sort by:</label>
-          <select id="sort-select" class="input select">
-            <option value="latest">Latest First</option>
-            <option value="oldest">Oldest First</option>
-            <option value="salary-high">Salary: High to Low</option>
-            <option value="salary-low">Salary: Low to High</option>
-          </select>
+        <div style="display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap;">
+          <!-- Match Toggle -->
+          <div class="match-toggle" id="match-toggle-container" style="display: none;">
+            <input type="checkbox" id="match-toggle" name="match-toggle">
+            <label for="match-toggle">Show only jobs above my threshold</label>
+          </div>
+          <div class="sort-group">
+            <label for="sort-select">Sort by:</label>
+            <select id="sort-select" class="input select">
+              <option value="latest">Latest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="match-score">Match Score</option>
+              <option value="salary-high">Salary: High to Low</option>
+              <option value="salary-low">Salary: Low to High</option>
+            </select>
+          </div>
         </div>
       </div>
       
@@ -123,7 +137,7 @@
       <!-- Empty State -->
       <div id="empty-state" class="dashboard-empty" style="display: none;">
         <h3>No jobs match your search</h3>
-        <p>Try adjusting your filters or search criteria to find more opportunities.</p>
+        <p id="empty-state-message">Try adjusting your filters or search criteria to find more opportunities.</p>
         <button type="button" class="btn btn-primary" onclick="document.getElementById('filter-form').reset();">Clear Filters</button>
       </div>
     </div>
@@ -135,6 +149,7 @@
   </div>
 
   <script src="jobs-data.js"></script>
+  <script src="preferences-engine.js"></script>
   <script src="dashboard-app.js"></script>
   <script src="navigation.js"></script>
 </body>

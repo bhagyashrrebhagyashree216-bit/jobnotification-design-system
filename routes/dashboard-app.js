@@ -9,6 +9,8 @@
   // State
   let currentJobs = [];
   let savedJobIds = [];
+  let userPreferences = null;
+  let showOnlyMatches = false;
   let currentFilters = {
     keyword: '',
     location: '',
@@ -24,6 +26,10 @@
   let modal;
   let modalContent;
   let emptyState;
+  let preferencesBanner;
+  let matchToggleContainer;
+  let matchToggle;
+  let emptyStateMessage;
 
   // Initialize
   document.addEventListener('DOMContentLoaded', function() {
@@ -34,6 +40,9 @@
     // Load saved jobs from localStorage
     loadSavedJobs();
     
+    // Load user preferences
+    loadPreferences();
+    
     // Initialize jobs
     currentJobs = [...jobsData];
     
@@ -43,6 +52,10 @@
     modal = document.getElementById('job-modal');
     modalContent = document.getElementById('modal-content');
     emptyState = document.getElementById('empty-state');
+    preferencesBanner = document.getElementById('preferences-banner');
+    matchToggleContainer = document.getElementById('match-toggle-container');
+    matchToggle = document.getElementById('match-toggle');
+    emptyStateMessage = document.getElementById('empty-state-message');
     
     // Setup event listeners
     if (filterForm) {
@@ -66,6 +79,14 @@
       if (sortSelect) {
         sortSelect.addEventListener('change', handleSortChange);
       }
+    }
+    
+    // Match toggle
+    if (matchToggle) {
+      matchToggle.addEventListener('change', function() {
+        showOnlyMatches = this.checked;
+        applyFilters();
+      });
     }
     
     // Modal close handlers
@@ -150,6 +171,35 @@
     renderJobs();
   }
 
+  // Load preferences
+  function loadPreferences() {
+    if (typeof window.preferencesEngine !== 'undefined') {
+      userPreferences = window.preferencesEngine.loadPreferences();
+      updatePreferencesUI();
+    }
+  }
+  
+  // Update preferences UI
+  function updatePreferencesUI() {
+    // Show/hide preferences banner
+    if (preferencesBanner) {
+      preferencesBanner.style.display = userPreferences ? 'none' : 'flex';
+    }
+    
+    // Show/hide match toggle
+    if (matchToggleContainer) {
+      matchToggleContainer.style.display = userPreferences ? 'flex' : 'none';
+    }
+  }
+  
+  // Get match score for a job
+  function getMatchScore(job) {
+    if (!userPreferences || typeof window.preferencesEngine === 'undefined') {
+      return null;
+    }
+    return window.preferencesEngine.calculateMatchScore(job, userPreferences);
+  }
+
   // Apply filters
   function applyFilters() {
     if (!filterForm) return;
@@ -163,7 +213,7 @@
       source: formData.get('source') || ''
     };
     
-    // Filter jobs
+    // Filter jobs using AND logic
     let filtered = jobsData.filter(job => {
       // Keyword filter (title, company, skills)
       if (currentFilters.keyword) {
@@ -193,6 +243,14 @@
         return false;
       }
       
+      // Match score filter (if toggle is enabled)
+      if (showOnlyMatches && userPreferences) {
+        const score = getMatchScore(job);
+        if (score === null || score < userPreferences.minMatchScore) {
+          return false;
+        }
+      }
+      
       return true;
     });
     
@@ -210,6 +268,17 @@
         break;
       case 'oldest':
         sorted.sort((a, b) => b.postedDaysAgo - a.postedDaysAgo);
+        break;
+      case 'match-score':
+        // Sort by match score (descending), null scores at the end
+        sorted.sort((a, b) => {
+          const scoreA = getMatchScore(a);
+          const scoreB = getMatchScore(b);
+          if (scoreB === null && scoreA === null) return 0;
+          if (scoreB === null) return -1;
+          if (scoreA === null) return 1;
+          return scoreB - scoreA;
+        });
         break;
       case 'salary-high':
         // Simple sort by extracting first number from salary
@@ -249,6 +318,12 @@
     
     // Attach event listeners to buttons
     attachJobCardListeners();
+    
+    // Update results count
+    const resultsCount = document.getElementById('results-count');
+    if (resultsCount) {
+      resultsCount.textContent = `${sortedJobs.length} job${sortedJobs.length !== 1 ? 's' : ''} found`;
+    }
   }
 
   // Create job card HTML
@@ -258,6 +333,15 @@
                        job.postedDaysAgo === 1 ? '1 day ago' : 
                        `${job.postedDaysAgo} days ago`;
     
+    // Get match score if preferences are set
+    const matchScore = getMatchScore(job);
+    const matchScoreHtml = matchScore !== null ? createMatchScoreBadge(matchScore) : '';
+    
+    // Get top 3 skills for preview
+    const skillsPreview = job.skills.slice(0, 3).map(skill => 
+      `<span class="skill-tag">${escapeHtml(skill)}</span>`
+    ).join('');
+    
     return `
       <div class="job-card" data-job-id="${job.id}">
         <div class="job-card-header">
@@ -265,7 +349,12 @@
             <h3 class="job-title">${escapeHtml(job.title)}</h3>
             <span class="job-company">${escapeHtml(job.company)}</span>
           </div>
+          ${matchScoreHtml}
           <span class="badge badge-${getSourceBadgeClass(job.source)}">${job.source}</span>
+        </div>
+        
+        <div class="job-skills-preview">
+          ${skillsPreview}
         </div>
         
         <div class="job-details">
@@ -400,10 +489,42 @@
     document.body.style.overflow = '';
   }
 
+  // Create match score badge HTML
+  function createMatchScoreBadge(score) {
+    if (typeof window.preferencesEngine === 'undefined') return '';
+    
+    const scoreClass = window.preferencesEngine.getMatchScoreClass(score);
+    const scoreLabel = window.preferencesEngine.getMatchScoreLabel(score);
+    
+    return `
+      <div class="match-score match-score-${scoreClass}">
+        <span class="match-score-value">${score}</span>
+        <span class="match-score-label">${scoreLabel}</span>
+      </div>
+    `;
+  }
+
   // Show empty state
   function showEmptyState() {
     if (jobsContainer) jobsContainer.innerHTML = '';
-    if (emptyState) emptyState.style.display = 'block';
+    if (emptyState) {
+      emptyState.style.display = 'block';
+      
+      // Update empty state message based on context
+      if (emptyStateMessage) {
+        if (showOnlyMatches && userPreferences) {
+          emptyStateMessage.textContent = 'No roles match your criteria. Adjust filters or lower threshold.';
+        } else {
+          emptyStateMessage.textContent = 'Try adjusting your filters or search criteria to find more opportunities.';
+        }
+      }
+    }
+    
+    // Update results count
+    const resultsCount = document.getElementById('results-count');
+    if (resultsCount) {
+      resultsCount.textContent = '0 jobs found';
+    }
   }
 
   // Hide empty state
